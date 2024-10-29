@@ -3,38 +3,53 @@
 // Answer:  6857
 // Completed on Sun, 14 Aug 2022, 22:37
 
-// algorithm FindPrimesEratosthenes(n):
-//     // INPUT
-//     //    n = an arbitrary number
-//     // OUTPUT
-//     //    prime numbers smaller than n
-//
-//     A <- an array of size n with boolean values set to true
-//
-//     for i <- 2 to sqrt(n):
-//         if A[i] is true:
-//             j <- i^2
-//             while j <= n:
-//                 A[j] <- false
-//                 j <- j + i
-//
-//     return the indices of A corresponding to true
-
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
-func main() {
-	fmt.Println(PrimeFactor(600851475143))
+/* All primes aside from 2 and 3 are of the form 6k+-1 */
+func not_prime(n int64) bool {
+	if (n-1)%6 == 0 {
+		return false
+	}
+	if (n+1)%6 == 0 {
+		return false
+	}
+	return true
 }
 
-func FindPrimesEratosthenes(n int64) []int64 {
-	A := make([]bool, n+1)
-	for k := range n + 1 {
-		if k == 0 {
-			A[k] = false
-		} else {
-			A[k] = true
+func is_prime(n int64) bool {
+	if not_prime(n) {
+		return false
+	}
+	max := int64(math.Ceil(math.Sqrt(float64(n))))
+	for i := int64(2); i < max; i++ {
+		if n%i == 0 {
+			return false
 		}
 	}
+	return true
+}
+
+func main() {
+	n := int64(600851475143)
+	largest := int64(0)
+
+	if (n % 2) == 0 {
+		largest = 2
+	}
+
+	for i := int64(3); i < int64(math.Sqrt(float64(n))); i += 2 {
+		if (n % i) == 0 {
+			if is_prime(i) {
+				fmt.Print(i, "\n")
+				largest = i
+			}
+		}
+	}
+	fmt.Printf("Largest: %d\n", largest)
+
 }
