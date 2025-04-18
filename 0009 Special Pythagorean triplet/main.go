@@ -13,6 +13,19 @@ import (
 func main() {
 	start := time.Now()
 
+	sum_a_b_c := 1000
+
+	for a := 1; a < sum_a_b_c; a++ {
+		for b := a; b < sum_a_b_c; b++ {
+			if a+b < sum_a_b_c {
+				c := sum_a_b_c - a - b
+				if IsPythagoreanTriplet(a, b, c) {
+					fmt.Println("a:{} b:{} c:{} product:{}", a, b, c, a*b*c)
+				}
+			}
+		}
+	}
+
 	fmt.Println("Computational time: ", time.Since(start))
 }
 
