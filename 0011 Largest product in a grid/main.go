@@ -59,10 +59,46 @@ func main() {
 	}
 	result := 0
 
-	// horizontal
-	for fila := 0; fila < 20; fila++ {
-		for column := 0; column < 17; column++ {
-			s := matrix[fila][column : column+4]
+	temp_result := MaxSumHorizontalMatriz(matrix, 4)
+	if temp_result > result {
+		result = temp_result
+	}
+
+	matrix_traspuesta := MatrizTraspuesta(matrix)
+	temp_result = MaxSumHorizontalMatriz(matrix_traspuesta, 4)
+	if temp_result > result {
+		result = temp_result
+	}
+	for x := 0; x < 17; x++ {
+		for y := 0; y < 17; y++ {
+			temp_result = matrix[x][y] * matrix[x+1][y+1] * matrix[x+2][y+2] * matrix[x+3][y+3]
+			if temp_result > result {
+				result = temp_result
+			}
+			temp_result = matrix[x+3][y] * matrix[x+2][y+1] * matrix[x+1][y+2] * matrix[x][y+3]
+			if temp_result > result {
+				result = temp_result
+			}
+			temp_result = matrix_traspuesta[x][y] * matrix_traspuesta[x+1][y+1] * matrix_traspuesta[x+2][y+2] * matrix_traspuesta[x+3][y+3]
+			if temp_result > result {
+				result = temp_result
+			}
+			temp_result = matrix_traspuesta[x+3][y] * matrix_traspuesta[x+2][y+1] * matrix_traspuesta[x+1][y+2] * matrix_traspuesta[x][y+3]
+			if temp_result > result {
+				result = temp_result
+			}
+		}
+	}
+
+	fmt.Println(result)
+	fmt.Println("Computational time: ", time.Since(start))
+}
+
+func MaxSumHorizontalMatriz(matriz [][]int, n int) int {
+	result := 0
+	for fila := 0; fila < len(matriz); fila++ {
+		for column := 0; column < len(matriz)-(n-1); column++ {
+			s := matriz[fila][column : column+4]
 			temporal := 1
 			for _, v := range s {
 				temporal *= v
@@ -72,22 +108,23 @@ func main() {
 			}
 		}
 	}
+	return result
+}
 
-	// Vertical
-	for column := 0; column < 20; column++ {
-		for fila := 0; fila < 17; fila++ {
-			s := matrix[fila : fila+4][column]
-			fmt.Println(s)
-			// temporal := 1
-			// for _, v := range s {
-			// 	temporal *= v
-			// }
-			// if temporal > result {
-			// 	result = temporal
-			// }
-		}
+func MatrizTraspuesta(matriz [][]int) [][]int {
+	filas_matriz := len(matriz)
+	columnas_matriz := len(matriz[0])
+	matriz_traspuesta := make([][]int, columnas_matriz)
+
+	// Initialize the transposed matrix with empty slices
+	for i := range matriz_traspuesta {
+		matriz_traspuesta[i] = make([]int, filas_matriz)
 	}
 
-	fmt.Println(result)
-	fmt.Println("Computational time: ", time.Since(start))
+	for i := 0; i < filas_matriz; i++ {
+		for j := 0; j < columnas_matriz; j++ {
+			matriz_traspuesta[j][i] = matriz[i][j]
+		}
+	}
+	return matriz_traspuesta
 }
