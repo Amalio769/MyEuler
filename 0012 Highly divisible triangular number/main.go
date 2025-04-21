@@ -27,5 +27,43 @@ import (
 func main() {
 	start := time.Now()
 
+	var list_triangle_number []int
+	for i := 1; i < 10; i++ {
+		list_triangle_number = append(list_triangle_number, NextTriangleNumber(list_triangle_number))
+	}
+
+	fmt.Println(list_triangle_number)
 	fmt.Println("Computational time: ", time.Since(start))
+}
+
+func NextTriangleNumber(list_triangle_number []int) int {
+	next_triangle_number := 0
+	if len(list_triangle_number) == 0 {
+		next_triangle_number = 1
+	}
+	if len(list_triangle_number) == 1 {
+		next_triangle_number = 2*list_triangle_number[0] + 1
+	}
+	if len(list_triangle_number) > 1 {
+		next_triangle_number = 2*list_triangle_number[len(list_triangle_number)-1] - list_triangle_number[len(list_triangle_number)-2] + 1
+	}
+	return next_triangle_number
+}
+
+func Divisors(n int) []int {
+	divisors := []int{}
+	// Iterate up to the square root of n
+	for i := 1; i*i <= n; i++ {
+		if n%i == 0 {
+			divisors = append(divisors, i) // Add the divisor
+			if i != n/i {
+				divisors = append(divisors, n/i) // Add the paired divisor
+			}
+		}
+	}
+	return divisors
+}
+
+func NumberDivisors(n int) int {
+	return len(Divisors(n))
 }
