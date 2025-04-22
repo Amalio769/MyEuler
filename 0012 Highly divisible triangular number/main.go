@@ -28,11 +28,15 @@ func main() {
 	start := time.Now()
 
 	var list_triangle_number []int
-	for i := 1; i < 10; i++ {
-		list_triangle_number = append(list_triangle_number, NextTriangleNumber(list_triangle_number))
+	for {
+		next_triangle_number := NextTriangleNumber(list_triangle_number)
+		list_triangle_number = append(list_triangle_number, next_triangle_number)
+		if NumberDivisors(next_triangle_number) > 500 {
+			break
+		}
 	}
 
-	fmt.Println(list_triangle_number)
+	fmt.Println(list_triangle_number[len(list_triangle_number)-1])
 	fmt.Println("Computational time: ", time.Since(start))
 }
 
