@@ -105,6 +105,7 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 	"time"
 )
 
@@ -212,9 +213,16 @@ func main() {
 		"20849603980134001723930671666823555245252804609722",
 		"53503534226472524250874054075591789781264330331690",
 	}
-	result := 0
-	for num, _ := range list_number {
-		result += int64(num[0:10])
+	var result int64 = 0
+	for _, num := range list_number {
+		// Convertir los primeros 10 caracteres a int64
+		partial, err := strconv.ParseInt(num, 10, 64)
+		if err != nil {
+			fmt.Println("Error al convertir:", err)
+			return
+		}
+		result += partial
 	}
+	fmt.Println("Resultado:", result)
 	fmt.Println("Computational time: ", time.Since(start))
 }
