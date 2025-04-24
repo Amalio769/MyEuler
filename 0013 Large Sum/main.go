@@ -105,13 +105,13 @@ package main
 
 import (
 	"fmt"
-	"strconv"
+	"math/big"
 	"time"
 )
 
 func main() {
 	start := time.Now()
-	list_number := []string{
+	list_string_number := []string{
 		"37107287533902102798797998220837590246510135740250",
 		"46376937677490009712648124896970078050417018260538",
 		"74324986199524741059474233309513058123726617309629",
@@ -213,16 +213,15 @@ func main() {
 		"20849603980134001723930671666823555245252804609722",
 		"53503534226472524250874054075591789781264330331690",
 	}
-	var result int64 = 0
-	for _, num := range list_number {
-		// Convertir los primeros 10 caracteres a int64
-		partial, err := strconv.ParseInt(num, 10, 64)
-		if err != nil {
-			fmt.Println("Error al convertir:", err)
-			return
-		}
-		result += partial
+	result := big.NewInt(0)
+	var list_big_number []*big.Int
+	for _, str := range list_string_number {
+		i := new(big.Int)
+		i.SetString(str, 10)
+		list_big_number = append(list_big_number, i)
+		result.Add(result, i) // Add the current number to the result
 	}
-	fmt.Println("Resultado:", result)
+
+	fmt.Println("Resultado:", result.String()[0:10])
 	fmt.Println("Computational time: ", time.Since(start))
 }
