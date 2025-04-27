@@ -11,6 +11,8 @@
             "request": "launch",
             "mode": "auto",
             "program": "${fileDirname}",
+            //"program": "${workspaceFolder}",
+            //"cwd": "home/amalio/Documentos/GitHub/MyEuler/0015 Lattice paths",
             "env": {"PYTHONPATH": "${workspaceFolder}${pathSeparator}${env:PYTHONPATH}"}
         }
     ]
