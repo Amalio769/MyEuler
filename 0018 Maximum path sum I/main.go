@@ -25,8 +25,16 @@
 //   63 66 04 68 89 53 67 30 73 16 69 87 40 31
 // 04 62 98 27 23 09 70 98 73 93 38 53 60 04 23
 
-// NOTE: As there are only 16384 routes, it is possible to solve this problem by trying every route. However, Problem 67, is the same challenge with a triangle containing one-hundred rows; it cannot be solved by brute force, and requires a clever method! ;o)
+// NOTE: As there are only 16384 routes, it is possible to solve this problem by trying every route. However, Problem 67, is the same challenge
+// with a triangle containing one-hundred rows; it cannot be solved by brute force, and requires a clever method! ;o)
 // Answer:  1074
+// Algorithm:
+// 1.-Start from the second-to-last row of the triangle.
+// 2.-For each element in the row, add the maximum of the two adjacent numbers from the row below.
+// 3.-Repeat this process for all rows until you reach the top of the triangle.
+// 4.-The top element will contain the maximum total.
+// This approach ensures that each number in the triangle is updated to represent the maximum sum possible from that point to the bottom.
+
 package main
 
 import (
