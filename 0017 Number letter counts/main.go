@@ -49,40 +49,48 @@ func main() {
 		"eighty",
 		"ninety",
 	}
+	centuries := []string{
+		"",
+		"onehundred",
+		"twohundred",
+		"threehundred",
+		"fourhundred",
+		"fivehundred",
+		"sixhundred",
+		"sevenhundred",
+		"eighthundred",
+		"ninehundred",
+	}
 	list_number := []string{}
-	for _, c := range digits {
-		var century string
+	and := ""
+	for _, c := range centuries {
 		if c == "" {
-			century = ""
+			and = ""
 		} else {
-			century = c + "hundred"
+			and = "and"
 		}
 		for _, n := range digits {
-			if n == "" || c == "" {
-				list_number = append(list_number, century+n)
+			if n == "" {
+				list_number = append(list_number, c+n)
 			} else {
-				list_number = append(list_number, century+"and"+n)
+				list_number = append(list_number, c+and+n)
 			}
-
 		}
 		for _, n := range teens {
-			list_number = append(list_number, century+"and"+n)
+			list_number = append(list_number, c+and+n)
 		}
 		for _, n := range tens {
 			for _, k := range digits {
-				list_number = append(list_number, century+"and"+n+k)
+				list_number = append(list_number, c+and+n+k)
 			}
 		}
 	}
 	list_number = append(list_number, "onethousand")
 	count_letter := 0
-	lista_len := []int{}
 	for _, i := range list_number {
 		count_letter += len(i)
-		lista_len = append(lista_len, len(i))
 	}
-	fmt.Println(list_number)
-	fmt.Println(lista_len)
+	// fmt.Println(list_number)
 	fmt.Println(count_letter)
 	fmt.Println("Computational time: ", time.Since(start))
 }
