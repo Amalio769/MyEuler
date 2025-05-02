@@ -92,5 +92,5 @@ func main() {
 	}
 	// fmt.Println(list_number)
 	fmt.Println(count_letter)
-	fmt.Println("Computational time: ", time.Since(start))
+	fmt.Println("Computational time:", time.Since(start))
 }
