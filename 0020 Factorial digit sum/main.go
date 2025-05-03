@@ -10,13 +10,26 @@ package main
 import (
 	"fmt"
 	"math/big"
+	"strconv"
 	"time"
 )
 
 func main() {
 	start := time.Now()
 	num := big.NewInt(100)
-	fmt.Println(factorial(num))
+	factorial := factorial(num)
+	str_num := factorial.String()
+	result := 0
+	for _, digit := range str_num {
+		digit_int, err := strconv.Atoi(string(digit))
+		if err != nil {
+			fmt.Println("Error al convertir el digito:", err)
+			continue
+		}
+		result += digit_int
+	}
+	fmt.Println(str_num)
+	fmt.Println(result)
 	fmt.Println("Computational time: ", time.Since(start))
 }
 
