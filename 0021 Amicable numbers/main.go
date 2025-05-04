@@ -15,7 +15,19 @@ import (
 
 func main() {
 	start := time.Now()
-	fmt.Println(AmicableNumbers(220))
+	list_amicable_numbers := []int{}
+	for i := 1; i < 10000; i++ {
+		if num1 := AmicableNumbers(i); num1 != 0 {
+			if !IsNumInSlice(list_amicable_numbers, i) {
+				list_amicable_numbers = append(list_amicable_numbers, i)
+			}
+			if !IsNumInSlice(list_amicable_numbers, num1) {
+				list_amicable_numbers = append(list_amicable_numbers, num1)
+			}
+		}
+	}
+	fmt.Println(list_amicable_numbers)
+	fmt.Println("La suma de los números amigable es: ", SumSlice(list_amicable_numbers))
 	fmt.Println("Computational time: ", time.Since(start))
 }
 
@@ -37,11 +49,19 @@ func SumSlice(slice []int) int {
 	return sum
 }
 
-func AmicableNumbers(num int) []int {
-	result := []int{}
+func AmicableNumbers(num int) int {
 	num1 := SumSlice(ProperDivisors(num))
-	if SumSlice(ProperDivisors(num1)) == num {
-		result = append(result, num, num1)
+	if SumSlice(ProperDivisors(num1)) == num && num != num1 {
+		return num1
 	}
-	return result
+	return 0
+}
+
+func IsNumInSlice(slice []int, num int) bool {
+	for _, value := range slice {
+		if value == num {
+			return true
+		}
+	}
+	return false
 }
