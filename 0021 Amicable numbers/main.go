@@ -15,6 +15,33 @@ import (
 
 func main() {
 	start := time.Now()
+	fmt.Println(AmicableNumbers(220))
+	fmt.Println("Computational time: ", time.Since(start))
+}
 
-	fmt.Println("Computatinal time: ", time.Since(start))
+func ProperDivisors(num int) []int {
+	divisors := []int{}
+	for i := 1; i < num; i++ {
+		if num%i == 0 {
+			divisors = append(divisors, i)
+		}
+	}
+	return divisors
+}
+
+func SumSlice(slice []int) int {
+	sum := 0
+	for _, value := range slice {
+		sum += value
+	}
+	return sum
+}
+
+func AmicableNumbers(num int) []int {
+	result := []int{}
+	num1 := SumSlice(ProperDivisors(num))
+	if SumSlice(ProperDivisors(num1)) == num {
+		result = append(result, num, num1)
+	}
+	return result
 }
