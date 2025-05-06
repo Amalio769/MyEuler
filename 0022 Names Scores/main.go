@@ -10,12 +10,52 @@
 package main
 
 import (
+	"encoding/csv"
 	"fmt"
+	"os"
+	"sort"
+	"strings"
 	"time"
 )
 
 func main() {
 	start := time.Now()
 
+	// Abrir el fichero
+	file, err := os.Open("/home/amalio/Documentos/GitHub/MyEuler/data/0022_names.txt")
+	if err != nil {
+		fmt.Println("Error al abrir el archivo:", err)
+		return
+	}
+	defer file.Close() // Asegurarse de cerrar el archivo
+
+	// Crear un lector CSV
+	reader := csv.NewReader(file)
+	reader.Comma = ',' // Especificar el delimitador (coma)
+
+	// Leer todos los registros
+	records, err := reader.ReadAll()
+	if err != nil {
+		fmt.Println("Error al leer el archivo TXT:", err)
+		return
+	}
+
+	names := records[0]
+	sort.Strings(names)
+
+	result := 0
+	for i, name := range names {
+		result += (i + 1) * SumPosLetterInWord(name)
+	}
+	fmt.Println("The total of total word scores is: ", result)
 	fmt.Println("Computational time: ", time.Since(start))
+}
+
+func SumPosLetterInWord(word string) int {
+	alphabet := "abcdefghijklmnopqrstuvwxyz"
+	result := 0
+	for _, letter := range word {
+		result += strings.Index(alphabet, strings.ToLower(string(letter))) + 1
+	}
+	return result
 }
