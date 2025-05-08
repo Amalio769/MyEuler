@@ -20,6 +20,65 @@ import (
 
 func main() {
 	start := time.Now()
+	list_abundant_number := []int{}
+	for num := 12; num < 28123; num++ {
+		if IsAbundantNumber(num) {
+			list_abundant_number = append(list_abundant_number, num)
+		}
+	}
+	list_sum_two_abundant_number := []int{}
+	for idx, value := range list_abundant_number {
+		for _, num := range list_abundant_number[idx:] {
+			if value+num < 28123 {
+				list_sum_two_abundant_number = append(list_sum_two_abundant_number, value+num)
+			}
 
+		}
+
+	}
+	list_number_until_28123 := []int{}
+	for value := range 28123 {
+		list_number_until_28123 = append(list_number_until_28123, value)
+	}
+	list_number_not_sum_two_abundant_number := []int{}
+	for _, value := range list_number_until_28123 {
+		if !IsNumInSlice(value, list_sum_two_abundant_number) {
+			list_number_not_sum_two_abundant_number = append(list_number_not_sum_two_abundant_number, value)
+		}
+	}
+	// fmt.Println(list_abundant_number)
+	// fmt.Println(list_number_not_sum_two_abundant_number)
+	fmt.Println(SumSlice(list_number_not_sum_two_abundant_number))
 	fmt.Println("Computational time: ", time.Since(start))
+}
+
+func ProperDivisors(num int) []int {
+	divisors := []int{}
+	for i := 1; i < num; i++ {
+		if num%i == 0 {
+			divisors = append(divisors, i)
+		}
+	}
+	return divisors
+}
+
+func SumSlice(list_numbers []int) int {
+	result := 0
+	for _, num := range list_numbers {
+		result += num
+	}
+	return result
+}
+
+func IsAbundantNumber(num int) bool {
+	return SumSlice(ProperDivisors(num)) > num
+}
+
+func IsNumInSlice(num int, slice []int) bool {
+	for _, value := range slice {
+		if num == value {
+			return true
+		}
+	}
+	return false
 }
