@@ -17,18 +17,28 @@ package main
 
 import (
 	"fmt"
-	"math/big"
+	"regexp"
 	"time"
 )
 
 func main() {
 	start := time.Now()
 
-	one := big.NewFloat(1)
-	for i := 2; i <= 10; i++ {
-		denominator := big.NewFloat(float64(i))
-		result := new(big.Float).Quo(one, denominator)
-		fmt.Printf("1/%d = %s\n", i, result.Text('f', 100))
-	}
+	// re := regexp.MustCompile(`(\d+?)+`)
+	// one := big.NewFloat(1)
+	// for i := 2; i <= 100; i++ {
+	// 	denominator := big.NewFloat(float64(i)).SetPrec(9000)
+	// 	result := new(big.Float).Quo(one, denominator)
+	// 	result_text := result.Text('f', 130)
+	// 	match := re.FindStringSubmatch(result_text)
+	// 	if len(match) > 1 {
+	// 		fmt.Printf("Para 1/%d : %s", i, match)
+	// 	}
+	// }
+	number := "0.0114942528735632183908045977011494252873563218390804597701149425287356321839080459770114942528735632183908045977"
+	re := regexp.MustCompile(`([0-9]+?)+`)
+	match := re.FindStringSubmatch(number)
+	fmt.Println(match)
+
 	fmt.Println("Computational time: ", time.Since(start))
 }
