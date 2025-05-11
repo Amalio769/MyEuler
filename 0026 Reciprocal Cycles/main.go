@@ -2,7 +2,7 @@
 // 1/2 = 0.5
 // 1/3 = 0.(3)
 // 1/4 = 0.25
-// 1/5 = 2.2
+// 1/5 = 0.2
 // 1/6 = 0.1(6)
 // 1/7 = 0.(142857)
 // 1/8 = 0.125
@@ -17,11 +17,18 @@ package main
 
 import (
 	"fmt"
+	"math/big"
 	"time"
 )
 
 func main() {
 	start := time.Now()
 
+	one := big.NewFloat(1)
+	for i := 2; i <= 10; i++ {
+		denominator := big.NewFloat(float64(i))
+		result := new(big.Float).Quo(one, denominator)
+		fmt.Printf("1/%d = %s\n", i, result.Text('f', 100))
+	}
 	fmt.Println("Computational time: ", time.Since(start))
 }
