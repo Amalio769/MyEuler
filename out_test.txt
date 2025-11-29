@@ -1,0 +1,2 @@
+For the number 1/983, the result has a recurring cicle decimals of 982
+Computational time:  10.559936ms
